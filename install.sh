@@ -5,6 +5,13 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SRC_DIR="$SCRIPT_DIR/src"
 
+# If SRC_DIR doesn't exist, clone the repo
+if [ ! -d "$SRC_DIR" ]; then
+  TMP_DIR=$(mktemp -d)
+  git clone --depth=1 https://github.com/sandcastle/dotfiles-cloudshell.git "$TMP_DIR"
+  SRC_DIR="$TMP_DIR/src"
+fi
+
 # Function to backup existing files
 backup_file() {
   local target="$1"
