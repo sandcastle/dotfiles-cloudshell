@@ -29,7 +29,7 @@ disabled = true
 [gcloud]
 disabled = true
 
-[docker]
+[container]
 disabled = true
 
 [hostname]
