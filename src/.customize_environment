@@ -13,6 +13,7 @@ mkdir -p "$HOME/.local/bin"
 # Install Starship
 if [ "$force" -eq 1 ] || ! command -v starship >/dev/null 2>&1; then
   echo "Installing Starship"
+  rm "$HOME/.local/bin/starship"
   curl -fsSL https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
 fi
 
@@ -35,7 +36,7 @@ fi
 
 # Install Mise
 if [ "$force" -eq 1 ] || ! command -v mise >/dev/null 2>&1; then
-  rm "$HOME/.local/bin/starship"
+  rm "$HOME/.local/bin/msie"
   curl -sSfL https://mise.jdx.dev/install.sh | sh -s -- --yes --prefix "$HOME/.local"
 fi
 
