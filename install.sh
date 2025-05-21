@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 # Parse flags
@@ -102,7 +102,11 @@ exec zsh -l
 log
 log "Customizing environment"
 
-zsh $HOME/.customize_environment --force
+if [ "$QUIET" -eq 1 ]; then
+  bash "$HOME/.customize_environment" --force >/dev/null 2>&1
+else
+  bash "$HOME/.customize_environment" --force
+fi
 
 log
 log "All done"
