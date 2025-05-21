@@ -19,11 +19,12 @@ fi
 # Install Neovim
 if [ "$force" -eq 1 ] || ! command -v nvim >/dev/null 2>&1; then
   echo "Installing Neovim"
-  rm -rf "$HOME/.local/nvim" nvim-linux-x86_64.tar.gz
+  sudo rm -rf "$HOME/.local/nvim" /tmp/nvim-linux-x86_64.tar.gz
+  cd /tmp
   curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
   mkdir -p "$HOME/.local/nvim"
-  tar -C "$HOME/.local/nvim" -xzf nvim-linux-x86_64.tar.gz
-  rm nvim-linux-x86_64.tar.gz
+  sudo tar -C "$HOME/.local/nvim" -xzf /tmp/nvim-linux-x86_64.tar.gz
+  sudo rm /tmp/nvim-linux-x86_64.tar.gz
   ln -s "$HOME/.local/nvim/bin/nvim" "$HOME/.local/bin/nvim"
 fi
 

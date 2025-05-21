@@ -31,4 +31,4 @@ disabled = true
 
 [hostname]
 ssh_only = false
-format = "on [cloudshell](bold yellow) "
+format = "[cloudshell](bold yellow) "

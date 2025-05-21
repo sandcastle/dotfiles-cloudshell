@@ -120,4 +120,4 @@ source /google/devshell/bashrc.google
 ## ----------------------------------------------
 ## My scripts below here
 
-# [ -n "$PS1" ] && source ~/.bash_profile
+[ -n "$PS1" ] && source ~/.bash_profile
