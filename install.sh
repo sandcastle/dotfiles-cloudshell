@@ -27,15 +27,18 @@ backup_file() {
 
 # Copy files and directories from src to home
 copy_dotfiles() {
-  # Prepare globs for regular and hidden files (excluding . and ..)
-  set -- "$SRC_DIR"/* "$SRC_DIR"/.[!.]* "$SRC_DIR"/..?*
-  if [ ! -e "$1" ]; then
-    echo "Warning: No files found in $SRC_DIR to copy."
-    return
-  fi
+  # Collect all files (including hidden ones, but not . or ..)
+  local items=()
   for item in "$SRC_DIR"/* "$SRC_DIR"/.[!.]* "$SRC_DIR"/..?*; do
     # Skip if the glob didn't match anything
     [ ! -e "$item" ] && continue
+    items+=("$item")
+  done
+  if [ ${#items[@]} -eq 0 ]; then
+    echo "Warning: No files found in $SRC_DIR to copy."
+    return
+  fi
+  for item in "${items[@]}"; do
     base_item="$(basename "$item")"
     target="$HOME/$base_item"
     if [ -d "$item" ]; then
