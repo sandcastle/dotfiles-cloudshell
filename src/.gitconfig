@@ -1,0 +1,133 @@
+[user]
+	name = Glenn Morton
+	email = glenn.morton@komo.tech
+
+[github]
+  user = sandcastle
+
+[alias]
+  c           = config --list  --local
+
+  up          = push -u origin
+  down        = pull --rebase
+  sync        = "!sh -c 'git down; git up' -"
+
+  st          = status --short
+  stv         = status -v
+
+  sq          = "!sh -c 'git merge --squash \"$1\"'"
+
+  save        = "!sh -c 'git add -A .; git commit -m \"$1\"' -"
+  saveall     = "!sh -c 'git commit -au -m \"$1\"' -"
+  discard     = checkout -- .
+  discardall  = reset --hard
+  undo        = reset HEAD~1 --mixed
+
+  mr          = "!sh -c 'git push -u origin -o merge_request.create -o merge_request.target=${1:-develop} -o merge_request.merge_when_pipeline_succeeds -o merge_request.should_remove_source_branch' -"
+
+  feat        = "!sh -c 'git branch \"feature/$1\"; git checkout \"feature/$1\"' -"
+  first       = commit -au -m 'Initial commit.'
+
+  graph       = log --graph
+  last        = log -n 10
+  url         = !git remote -v|sed "'s|.*git[:@]\\(.*\\).git.*|http://\\1|;s|m:|m/|'"|uniq|xargs open
+  whois       = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+
+  rmtag       = "!sh -c 'git tag -d $1; git push origin :refs/tags/$1'"
+  pr          = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1; } ; f"
+
+[pull]
+  rebase = true
+
+[push]
+  default = current
+
+[color]
+  ui = auto
+
+[core]
+  editor = code
+  excludesfile = ~/.gitignore
+  ignorecase = false
+  pager = delta | moar
+
+[delta]
+  navigate = true
+  light = false
+  side-by-side = true
+  line-numbers = true
+  syntax-theme = Dracula
+  plus-style = "syntax #003800"
+  minus-style = "syntax #3f0001"
+  plus-emph-style = "syntax #006800"
+  minus-emph-style = "syntax #8d0000"
+  whitespace-error-style = "red reverse"
+  file-style = "bold cyan"
+  hunk-header-style = "line-number bold"
+  line-numbers-left-style = "cyan"
+  line-numbers-right-style = "cyan"
+  line-numbers-minus-style = "red"
+  line-numbers-plus-style = "green"
+  merge-conflict-begin-symbol = "◈"
+  merge-conflict-end-symbol = "◈"
+  merge-conflict-ours-begin-symbol = "╰"
+  merge-conflict-ours-end-symbol = "╯"
+  merge-conflict-theirs-begin-symbol = "╭"
+  merge-conflict-theirs-end-symbol = "╮"
+  scrolloff = 5
+  keep-plus-minus-markers = true
+  file-decoration-style = "bold yellow"
+
+[rebase]
+  autoStash = true
+
+[format]
+  pretty = %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%an%Creset %C(bold yellow)%GK%Creset
+  graph = true
+
+[advice]
+  statusHints = false
+
+[log]
+  abbrevCommit = true
+
+# gh:sandcastle/dotfiles
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "gh:"
+  pushInsteadOf = "git://github.com/"
+
+# gist:3928760
+[url "git@gist.github.com:"]
+  insteadOf = "gist:"
+  pushInsteadOf = "gist:"
+  pushInsteadOf = "git://gist.github.com/"
+
+[mergetool]
+  keepBackup = false
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
+
+[color "diff"]
+  meta = 11
+  frag = magenta bold
+  commit = yellow bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+
+[commit]
+  gpgSign = false
+
+[tag]
+  forceSignAnnotated = false

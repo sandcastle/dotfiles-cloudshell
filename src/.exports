@@ -1,0 +1,30 @@
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+# ---------------------------- EDITOR ----------------------------
+
+export EDITOR='nvim'
+export KUBE_EDITOR='nvim'
+
+# ---------------------------- NODE ----------------------------
+
+# Enable persistent REPL history for `node`.
+export NODE_REPL_HISTORY=~/.node_history
+# Allow 32³ entries; the default is 1000.
+export NODE_REPL_HISTORY_SIZE='32768'
+# Use sloppy mode by default, matching web browsers.
+export NODE_REPL_MODE='sloppy'
+
+# ---------------------------- PYTHON ----------------------------
+
+# Make Python use UTF-8 encoding for output to stdin, stdout, and stderr.
+export PYTHONIOENCODING='UTF-8'
+
+# ---------------------------- HISTORY ----------------------------
+
+# Increase Bash history size. Allow 32³ entries; the default is 500.
+export HISTSIZE=32768
+export HISTFILESIZE=32768
+export SAVEHIST=32768
+
+# Omit duplicates and commands that begin with a space from history.
+export HISTCONTROL='ignoreboth'
