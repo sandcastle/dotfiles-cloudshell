@@ -29,6 +29,9 @@ disabled = true
 [gcloud]
 disabled = true
 
+[docker]
+disabled = true
+
 [hostname]
 ssh_only = false
 format = "[cloudshell](bold yellow) "
