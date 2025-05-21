@@ -23,6 +23,7 @@ fi
 backup_file() {
   local target="$1"
   if [ -e "$target" ]; then
+    mkdir -p "$(dirname "$BACKUP_DIR/$target")"
     mv "$target" "$BACKUP_DIR/$target"
     echo " → Backed up $BACKUP_DIR/$target"
   fi
