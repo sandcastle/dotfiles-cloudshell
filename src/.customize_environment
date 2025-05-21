@@ -1,33 +1,40 @@
 #!/usr/bin/env bash
 
+# Parse arguments
+force=0
+for arg in "$@"; do
+  if [ "$arg" = "--force" ]; then
+    force=1
+  fi
+done
+
 mkdir -p "$HOME/.local/bin"
 
 # Install Starship
-if ! command -v starship &>/dev/null; then
+if [ "$force" -eq 1 ] || ! command -v starship >/dev/null 2>&1; then
   echo "Installing Starship"
   curl -fsSL https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
 fi
 
 # Install Neovim
-if ! command -v nvim &>/dev/null; then
+if [ "$force" -eq 1 ] || ! command -v nvim >/dev/null 2>&1; then
   echo "Installing Neovim"
   curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-  sudo rm -rf $HOME/.local/bin/nvim
-  sudo tar -C $HOME/.local/bin -xzf nvim-linux-x86_64.tar.gz
+  rm -rf "$HOME/.local/bin/nvim"
+  tar -C "$HOME/.local/bin" -xzf nvim-linux-x86_64.tar.gz
 fi
 
 # Install zsh
-if ! command -v zsh &>/dev/null; then
+if [ "$force" -eq 1 ] || ! command -v zsh >/dev/null 2>&1; then
   echo "Installing Zsh"
-  curl -fsSL https://raw.githubusercontent.com/romkatv/zsh-bin/master/install | bash -s -- -d "$HOME/.local"
+  curl -fsSL https://raw.githubusercontent.com/romkatv/zsh-bin/master/install | sh -s -- -d "$HOME/.local"
 
   # Install Zsh Plugins
-  git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/plugins/zsh-autosuggestions
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.zsh/plugins/zsh-syntax-highlighting
+  # git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/plugins/zsh-autosuggestions
+  # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.zsh/plugins/zsh-syntax-highlighting
 fi
 
-# Set Zsh as default shell
-# chsh -s $(which zsh)
-
 # Install Mise
-curl -sSfL https://mise.jdx.dev/install.sh | bash -s -- --yes --prefix ~/.local
+if [ "$force" -eq 1 ] || ! command -v mise >/dev/null 2>&1; then
+  curl -sSfL https://mise.jdx.dev/install.sh | sh -s -- --yes --prefix "$HOME/.local"
+fi

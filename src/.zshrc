@@ -93,77 +93,64 @@ if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
     print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
-# # Load zi
-# . "$HOME/.zi/bin/zi.zsh"
-# autoload -Uz _zi
-# (( ${+_comps} )) && _comps[zi]=_zi
+# Load zi
+. "$HOME/.zi/bin/zi.zsh"
+autoload -Uz _zi
+(( ${+_comps} )) && _comps[zi]=_zi
 
-# # Load zi annexes and meta-plugins
-# zi light-mode for \
-#   z-shell/z-a-meta-plugins \
-#   @annexes
+# Load zi annexes and meta-plugins
+zi light-mode for \
+  z-shell/z-a-meta-plugins \
+  @annexes
 
-# # Configure OMZP and OMZL shorthands
-# zi light z-shell/z-a-patch-dl
+# Configure OMZP and OMZL shorthands
+zi light z-shell/z-a-patch-dl
 
-# # Load core zsh plugins SYNCHRONOUSLY for stability
-# zi ice pick"zcomp.zsh" atload"zicompinit_fast" blockf
-# zi for \
-#     zsh-users/zsh-completions \
-#     zsh-users/zsh-autosuggestions \
-#     zsh-users/zsh-history-substring-search \
-#     zdharma-continuum/fast-syntax-highlighting
+# Load core zsh plugins SYNCHRONOUSLY for stability
+zi ice pick"zcomp.zsh" atload"zicompinit_fast" blockf
+zi for \
+    zsh-users/zsh-completions \
+    zsh-users/zsh-autosuggestions \
+    zsh-users/zsh-history-substring-search \
+    zdharma-continuum/fast-syntax-highlighting
 
-# # Load git plugin and setup aliases
-# zi snippet OMZL::git.zsh
-# zi snippet OMZP::git
+# Load git plugin and setup aliases
+zi snippet OMZL::git.zsh
+zi snippet OMZP::git
 
-# # Load cloud/container plugins
-# # zi wait lucid as"completion" for \
-# #   https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker \
-# #   https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
+# Load cloud/container plugins
+# zi wait lucid as"completion" for \
+#   https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker \
+#   https://raw.githubusercontent.com/docker/compose/master/contrib/completion/zsh/_docker-compose
 
-# # Tool-specific plugins with conditional loading
-# zi wait lucid for \
-#   has"aws" \
-#     OMZP::aws \
-#   has"brew" \
-#     OMZP::brew \
-#   has"kubectl" \
-#     OMZP::kubectl \
-#   has"terraform" \
-#     OMZP::terraform \
-#   has"dotnet" \
-#     atload". $DOTFILES/lang/dotnet/env.sh" \
-#     OMZP::dotnet \
-#   has"go" \
-#     atload". $DOTFILES/lang/go/env.sh" \
-#     OMZP::golang \
-#   has"node" \
-#     atload". $DOTFILES/lang/node/env.sh" \
-#     OMZP::node \
-#   has"yarn" \
-#     OMZP::yarn \
-#   has"ruby" \
-#     atload". $DOTFILES/lang/ruby/env.sh" \
-#     OMZP::ruby \
-#   has"z" \
-#     OMZP::z \
-#   has'pip' \
-#     OMZP::pip \
-#   has"python" \
-#     OMZP::python
+# Tool-specific plugins with conditional loading
+zi wait lucid for \
+  has"kubectl" \
+    OMZP::kubectl \
+  has"terraform" \
+    OMZP::terraform \
+  has"dotnet" \
+    OMZP::dotnet \
+  has"go" \
+    OMZP::golang \
+  has"node" \
+    OMZP::node \
+  has"yarn" \
+    OMZP::yarn \
+  has"ruby" \
+    OMZP::ruby \
+  has"z" \
+    OMZP::z \
+  has'pip' \
+    OMZP::pip \
+  has"python" \
+    OMZP::python
 
 # ----------------------------------------------
 
 # Modern prompt
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
-fi
-
-# Smarter cd command
-if command -v zoxide >/dev/null 2>&1; then
-  eval "$(zoxide init zsh)"
 fi
 
 # Language environments

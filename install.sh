@@ -67,4 +67,12 @@ echo "Dotfiles installed!"
 echo
 echo "Reloading shell"
 
-exec zsh
+exec zsh -l
+
+echo
+echo "Customizing environment"
+
+zsh $HOME/.customize_environment --force
+
+echo
+echo "All done"
