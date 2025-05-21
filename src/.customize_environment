@@ -19,22 +19,23 @@ fi
 # Install Neovim
 if [ "$force" -eq 1 ] || ! command -v nvim >/dev/null 2>&1; then
   echo "Installing Neovim"
+  rm -rf "$HOME/.local/nvim" nvim-linux-x86_64.tar.gz
   curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-  rm -rf "$HOME/.local/bin/nvim"
-  tar -C "$HOME/.local/bin" -xzf nvim-linux-x86_64.tar.gz
+  mkdir -p "$HOME/.local/nvim"
+  tar -C "$HOME/.local/nvim" -xzf nvim-linux-x86_64.tar.gz
+  rm nvim-linux-x86_64.tar.gz
+  ln -s "$HOME/.local/nvim/bin/nvim" "$HOME/.local/bin/nvim"
 fi
 
 # Install zsh
 if [ "$force" -eq 1 ] || ! command -v zsh >/dev/null 2>&1; then
   echo "Installing Zsh"
+  rm "$HOME/.local/bin/zsh"
   curl -fsSL https://raw.githubusercontent.com/romkatv/zsh-bin/master/install | sh -s -- -d "$HOME/.local"
-
-  # Install Zsh Plugins
-  # git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/plugins/zsh-autosuggestions
-  # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.zsh/plugins/zsh-syntax-highlighting
 fi
 
 # Install Mise
 if [ "$force" -eq 1 ] || ! command -v mise >/dev/null 2>&1; then
+  rm "$HOME/.local/bin/startship"
   curl -sSfL https://mise.jdx.dev/install.sh | sh -s -- --yes --prefix "$HOME/.local"
 fi
