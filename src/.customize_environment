@@ -40,3 +40,5 @@ if [ "$force" -eq 1 ] || ! command -v mise >/dev/null 2>&1; then
   rm "$HOME/.local/bin/startship"
   curl -sSfL https://mise.jdx.dev/install.sh | sh -s -- --yes --prefix "$HOME/.local"
 fi
+
+exec bash -l

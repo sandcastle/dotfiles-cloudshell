@@ -97,7 +97,7 @@ log "Dotfiles installed!"
 log
 log "Reloading shell"
 
-exec zsh -l
+exec bash -l
 
 log
 log "Customizing environment"
