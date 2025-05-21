@@ -94,10 +94,6 @@ copy_dotfiles
 
 log
 log "Dotfiles installed!"
-log
-log "Reloading shell"
-
-exec bash -l
 
 log
 log "Customizing environment"
@@ -110,3 +106,5 @@ fi
 
 log
 log "All done"
+
+exec bash
