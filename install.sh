@@ -1,9 +1,35 @@
 #!/bin/bash
 set -e
 
+# Parse flags
+VERBOSE=0
+QUIET=0
+for arg in "$@"; do
+  case $arg in
+  --verbose)
+    VERBOSE=1
+    ;;
+  --quiet)
+    QUIET=1
+    ;;
+  esac
+done
+
+# Logging functions
+log() {
+  if [ "$QUIET" -eq 0 ]; then
+    echo "$@"
+  fi
+}
+vlog() {
+  if [ "$VERBOSE" -eq 1 ] && [ "$QUIET" -eq 0 ]; then
+    echo "$@"
+  fi
+}
+
 # Check if git is installed
 if ! command -v git >/dev/null 2>&1; then
-  echo "Error: git is not installed. Please install git and try again." >&2
+  log "Error: git is not installed. Please install git and try again." >&2
   exit 1
 fi
 
@@ -25,7 +51,7 @@ backup_file() {
   if [ -e "$target" ]; then
     mkdir -p "$(dirname "$BACKUP_DIR/$target")"
     mv "$target" "$BACKUP_DIR/$target"
-    echo " → Backed up $BACKUP_DIR/$target"
+    vlog " → Backed up $BACKUP_DIR/$target"
   fi
 }
 
@@ -39,7 +65,7 @@ copy_dotfiles() {
     items+=("$item")
   done
   if [ ${#items[@]} -eq 0 ]; then
-    echo "Warning: No files found in $SRC_DIR to copy."
+    log "Warning: No files found in $SRC_DIR to copy."
     return
   fi
   for item in "${items[@]}"; do
@@ -51,14 +77,14 @@ copy_dotfiles() {
         backup_file "$target"
       fi
       cp -r "$item" "$target"
-      echo "Copied directory $base_item to $target"
+      vlog "Copied directory $base_item to $target"
     else
       # If it's a file, copy and backup if needed
       if [ -e "$target" ]; then
         backup_file "$target"
       fi
       cp "$item" "$target"
-      echo "Copied file $base_item to $target"
+      vlog "Copied file $base_item to $target"
     fi
   done
 }
@@ -66,17 +92,17 @@ copy_dotfiles() {
 # Main
 copy_dotfiles
 
-echo
-echo "Dotfiles installed!"
-echo
-echo "Reloading shell"
+log
+log "Dotfiles installed!"
+log
+log "Reloading shell"
 
 exec zsh -l
 
-echo
-echo "Customizing environment"
+log
+log "Customizing environment"
 
 zsh $HOME/.customize_environment --force
 
-echo
-echo "All done"
+log
+log "All done"

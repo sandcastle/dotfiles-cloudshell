@@ -19,7 +19,6 @@ setopt HIST_SAVE_NO_DUPS  # Do not write a duplicate event to the history file
 # Skip compinit on every shell load
 skip_global_compinit=1
 
-
 # Completion settings
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case insensitive completion
