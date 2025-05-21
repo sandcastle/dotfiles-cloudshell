@@ -19,13 +19,11 @@ fi
 # Install Neovim
 if [ "$force" -eq 1 ] || ! command -v nvim >/dev/null 2>&1; then
   echo "Installing Neovim"
-  sudo rm -rf "$HOME/.local/nvim" /tmp/nvim-linux-x86_64.tar.gz
-  cd /tmp
-  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+  curl -Lo /tmp/nvim-linux-x86_64.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
   mkdir -p "$HOME/.local/nvim"
-  sudo tar -C "$HOME/.local/nvim" -xzf /tmp/nvim-linux-x86_64.tar.gz
-  sudo rm /tmp/nvim-linux-x86_64.tar.gz
-  ln -s "$HOME/.local/nvim/bin/nvim" "$HOME/.local/bin/nvim"
+  tar -C "$HOME/.local/nvim" --strip-components=1 -xzf /tmp/nvim-linux-x86_64.tar.gz
+  rm /tmp/nvim-linux-x86_64.tar.gz
+  ln -sf "$HOME/.local/nvim/bin/nvim" "$HOME/.local/bin/nvim"
 fi
 
 # Install zsh
@@ -39,4 +37,12 @@ fi
 if [ "$force" -eq 1 ] || ! command -v mise >/dev/null 2>&1; then
   rm "$HOME/.local/bin/startship"
   curl -sSfL https://mise.jdx.dev/install.sh | sh -s -- --yes --prefix "$HOME/.local"
+fi
+
+# Install kubectx
+if [ "$force" -eq 1 ] || ! command -v kubectx >/dev/null 2>&1; then
+  sudo rm -rf $HOME/.local/kubectx
+  git clone https://github.com/ahmetb/kubectx $HOME/.local/kubectx
+  ln -sf $HOME/.local/kubectx/kubens $HOME/.local/bin/kubens
+  ln -sf $HOME/.local/kubectx/kubectx $HOME/.local/bin/kubectx
 fi
