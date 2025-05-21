@@ -7,6 +7,9 @@ if ! command -v git >/dev/null 2>&1; then
   exit 1
 fi
 
+BACKUP_DIR="$HOME/.backup/$(date +%s)"
+mkdir -p "$BACKUP_DIR"
+
 # Is the repo local or remote?
 if [ -f "$(pwd)/install.sh" ] && [ -d "$(pwd)/.git" ]; then
   SRC_DIR="$(pwd)/src"
@@ -20,8 +23,8 @@ fi
 backup_file() {
   local target="$1"
   if [ -e "$target" ]; then
-    mv "$target" "$target.bak.$(date +%s)"
-    echo "Backed up $target to $target.bak.$(date +%s)"
+    mv "$target" "$BACKUP_DIR/$target"
+    echo " → Backed up $BACKUP_DIR/$target"
   fi
 }
 
