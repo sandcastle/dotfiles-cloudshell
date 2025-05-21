@@ -1,12 +1,16 @@
 #!/bin/bash
 set -e
 
-# Determine the directory where this script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SRC_DIR="$SCRIPT_DIR/src"
+# Check if git is installed
+if ! command -v git >/dev/null 2>&1; then
+  echo "Error: git is not installed. Please install git and try again." >&2
+  exit 1
+fi
 
-# If SRC_DIR doesn't exist, clone the repo
-if [ ! -d "$SRC_DIR" ]; then
+# Is the repo local or remote?
+if [ -f "$(pwd)/install.sh" ] && [ -d "$(pwd)/.git" ]; then
+  SRC_DIR="$(pwd)/src"
+else
   TMP_DIR=$(mktemp -d)
   git clone --depth=1 https://github.com/sandcastle/dotfiles-cloudshell.git "$TMP_DIR"
   SRC_DIR="$TMP_DIR/src"
