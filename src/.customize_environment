@@ -2,16 +2,15 @@
 
 mkdir -p "$HOME/.local/bin"
 
-# Install Mise
-curl -s https://mise.run | MISE_QUIET=1 MISE_INSTALL_HELP=0 sh -s >/dev/null 2>&1
-
 # Install Starship
 if ! command -v starship &>/dev/null; then
-  curl -fsSL https://starship.rs/install.sh | bash -s -- --yes --bin-dir "$HOME/.local/bin"
+  echo "Installing Starship"
+  curl -fsSL https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$HOME/.local/bin"
 fi
 
 # Install Neovim
 if ! command -v nvim &>/dev/null; then
+  echo "Installing Neovim"
   curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
   sudo rm -rf $HOME/.local/bin/nvim
   sudo tar -C $HOME/.local/bin -xzf nvim-linux-x86_64.tar.gz
@@ -19,12 +18,16 @@ fi
 
 # Install zsh
 if ! command -v zsh &>/dev/null; then
+  echo "Installing Zsh"
   curl -fsSL https://raw.githubusercontent.com/romkatv/zsh-bin/master/install | bash -s -- -d "$HOME/.local"
+
+  # Install Zsh Plugins
+  git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/plugins/zsh-autosuggestions
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.zsh/plugins/zsh-syntax-highlighting
 fi
 
-# Install Zsh Plugins
-git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.zsh/plugins/zsh-syntax-highlighting
-
 # Set Zsh as default shell
-chsh -s $(which zsh)
+# chsh -s $(which zsh)
+
+# Install Mise
+curl -sSfL https://mise.jdx.dev/install.sh | bash -s -- --yes --prefix ~/.local
