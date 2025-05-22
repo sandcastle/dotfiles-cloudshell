@@ -47,3 +47,9 @@ if [ "$force" -eq 1 ] || ! command -v kubectx >/dev/null 2>&1; then
   ln -sf $HOME/.local/kubectx/kubens $HOME/.local/bin/kubens
   ln -sf $HOME/.local/kubectx/kubectx $HOME/.local/bin/kubectx
 fi
+
+if [ "$force" -eq 1 ] || ! command -v http >/dev/null 2>&1; then
+  sudo rm -rf $HOME/.local/bin/http
+  curl -Lo $HOME/.local/bin/http https://packages.httpie.io/binaries/linux/http-latest
+  chmod +x $HOME/.local/bin/http
+fi
